@@ -1,3 +1,18 @@
+import { getPosts } from './services/api.js';
+
+async function renderPosts() {
+    const posts = await getPosts();
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <h1>Blog Posts</h1>
+        <ul>
+            ${posts.map(post => `<li>${post.title}</li>`).join('')}
+        </ul>
+    `;
+}
+
+
+
 // Simulated routing system
 function router(){
   const routes = {
@@ -13,7 +28,7 @@ function router(){
 window.addEventListener('popstate', router);
 window.addEventListener('DOMContentLoaded', ()=>{
   document.body.addEventListener('click' , (e) => {
-
+    
     if(e.target.matches('a')){
       e.preventDefault();
       const url = e.target.getAttribute('href');
@@ -23,3 +38,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
   });
   router();
 });
+
+
+renderPosts();
